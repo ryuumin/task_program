@@ -1,0 +1,4 @@
+データベース
+mysql022.phy.lolipop.lan
+LAA0580134-cosmotree
+imazumi0205
