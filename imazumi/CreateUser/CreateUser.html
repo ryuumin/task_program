@@ -4,21 +4,72 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Cosmo Tree</title>
 <script type="text/javascript" src="../jquery-2.1.3.min.js"></script>
-<script type="text/javascript" src="CreateUser.js"></script>
+<!-- <script type="text/javascript" src="CreateUser.js"></script> -->
+
+<script type="text/javascript">
+
+function CheckForm(){
+	var userName = CreateUser_form.userName.value;
+	var password = CreateUser_form.password.value;
+	if(userName.length >= 2 && password.length >= 2){
+		CreateNewUserDatabase(userName,password);
+	}
+}
+
+var url = "SetUserInfo.html";
+
+//データベースに登録
+function CreateNewUserDatabase(userName,password){
+	var flag = 0;
+	var param = {"userName" : userName,"password" : password};
+	$.ajax({
+  	   type: "POST",url: "CreateUser.php",data:JSON.stringify(param),dataType: "json",success: function(data, dataType){
+                //結果が0件の場合
+                if(data == null) alert('データが0件でした');
+                //返ってきたデータ
+		flag = data[0].flag;
+
+		if(flag == 0){
+			var info = document.getElementById('success');
+			var textNode = document.createTextNode('Success!!');
+			info.appendChild(textNode);
+			//クッキーにユーザ名だけ保存してジャンプ
+			document.cookie = "userName=" + userName;
+			setTimeout("jumpPage()",1000);
+
+		}else{
+			var info = document.getElementById('success');
+			var textNode = document.createTextNode('Miss!');
+			info.appendChild(textNode);
+		}
+           },
+ 
+            error: function(XMLHttpRequest, textStatus, errorThrown)
+            {
+                //エラーメッセージの表示
+                alert('Error : ' + errorThrown);
+            }
+        });
+}
+
+<!-- 指定のページにジャンプ -->
+function jumpPage() {
+  location.href = url;
+}
+
+</script>
+
 </head>
 <body>
 
 <h1>Welcome to Cosmo Tree!!</h1>
-<p id ="success">hfsd</p>
+<p id ="success">judgement:</p>
 
-<script type="text/javascript">
-var userName="test3";
-var password="pass";
-<!-- 登録成功かどうかによってメッセージを変える -->
-CreateNewUserDatabase(userName,password);
+<form name="CreateUser_form" action="CreateUser.html">
+<input type="text" name="userName">
+<input type="text" name="password">
+<input type="button" value="register" onclick="CheckForm()">
+</form>
 
-</script>
-
-<p id ="success">hfsd</p>
 </body>
 </html>
