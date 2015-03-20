@@ -17,8 +17,12 @@ $link = mysql_connect($url,$user,$pass) or die("cannot connect database");
  
 $sdb = mysql_select_db($db,$link) or die("not correct database name");
 
-$userName = (string)(isset($data['userName']) ? $data['userName'] : "");
-$password = (string)(isset($data['password']) ? $data['password'] : "");
+//$userName = (string)(isset($data['userName']) ? $data['userName'] : "");
+//$password = (string)(isset($data['password']) ? $data['password'] : ""); 
+
+$userName = $_GET["UserName"];
+$password = $_GET["Password"];
+
 
 //“¯‚¶ƒ†[ƒU–¼‚ª‘¶İ‚·‚é‚©‚ğ’²‚×‚é
 $sql="SELECT * FROM user where userName = '".$userName."'";
