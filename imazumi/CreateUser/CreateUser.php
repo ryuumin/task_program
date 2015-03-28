@@ -44,6 +44,6 @@ if(mysql_num_rows($result)!=0){
 
 $array[]=array('flag' => (string)$flag);
 
-echo json_encode( $array );
+echo json_encode( $flag );
 exit;
 ?>
